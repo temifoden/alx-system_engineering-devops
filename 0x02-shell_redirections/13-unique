@@ -1,0 +1,2 @@
+#!/bin/bash
+echo -e "apple\norange\nbanana\napple\ngrape\nbanana\norange" | sort | uniq -u
