@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Yhis script display listening ports along with the PID and program name.
+
+# Execure netstat command to get listening ports
+netstat -tuln | awk 'NR > 2 && $NF ~ /^[0-9]+\/.*/ {print $0}' | while read line; do
+    # Extract PID and program name
+    pid=$(echo "$line" | awk '{split($NF,a,"/"); print a[1]}')
+    program=$(echo "$line" | awk '{$NF=""; print}')
+    # Get program name using PID
+    program_name=$(ps -p "$pid" -o comm=)
+    # Print output
+    echo "$line $program_name"
+done
