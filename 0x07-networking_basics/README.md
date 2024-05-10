@@ -107,10 +107,10 @@ That only shows listening sockets
 That shows the PID and name of the program to which each socket belongs
 Example:
 
-sylvain@ubuntu$ sudo ./4-TCP_and_UDP_ports
+sylvain@ubuntu$ sudo ./4-TCP*and_UDP_ports
 Active Internet connections (only servers)
 Proto Recv-Q Send-Q Local Address Foreign Address State PID/Program name
-tcp 0 0 _:sunrpc _:_ LISTEN 518/rpcbind
+tcp 0 0 *:sunrpc _:_ LISTEN 518/rpcbind
 tcp 0 0 _:ssh _:_ LISTEN 1240/sshd
 tcp 0 0 _:32938 _:_ LISTEN 547/rpc.statd
 tcp6 0 0 [::]:sunrpc [::]:_ LISTEN 518/rpcbind
@@ -124,7 +124,7 @@ udp 0 0 _:3845 _:_ 562/dhclient
 udp 0 0 _:bootpc _:_ 562/dhclient
 udp6 0 0 [::]:47444 [::]:_ 547/rpc.statd
 udp6 0 0 [::]:sunrpc [::]:_ 518/rpcbind
-udp6 0 0 [::]:50038 [::]:_ 562/dhclient
+udp6 0 0 [::]:50038 [::]:\_ 562/dhclient
 udp6 0 0 [::]:691 [::]:\* 518/rpcbind
 Active UNIX domain sockets (only servers)
 Proto RefCnt Flags Type State I-Node PID/Program name Path
