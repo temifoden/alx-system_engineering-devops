@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Bash script to listen on port 98 on localhost
+
+# Function to handle incoming connections
+handle_connection() {
+    while IFS= read -r line; do
+        echo "$line"
+    done
+}
+
+# Main function to start listening on port 98
+main() {
+    # Ensure port 98 is not already in use
+    if nc -z localhost 98; then
+        echo "Port 98 is already in use."
+        exit 1
+    fi
+
+    # Start listening on port 98
+    nc -l 127.0.0.1 98 | handle_connection
+}
+
+# Call the main function
+main
