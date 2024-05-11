@@ -1,16 +1,37 @@
-#!/usr/bin/env bash
-# Bash script to configure localhost and facebook.com IP addresses
+#!/bin/bash
 
-# Backup the original hosts file
-sudo cp /etc/hosts /etc/hosts.bak
+# Function to modify /etc/hosts file
+modify_hosts() {
+  local ip_localhost="$1"
+  local ip_facebook="$2"
 
-# Update localhost IP address to 127.0.0.2
-sudo sed -i '' 's/^127.0.0.1\s*localhost$/127.0.0.2 localhost/' /etc/hosts
+  # Backup original /etc/hosts
+  sudo cp /etc/hosts /etc/hosts.bak
 
-# Update facebook.com IP address to 8.8.8.8
-sudo sed -i '' 's/^.*facebook.com\s*$/8.8.8.8 facebook.com/' /etc/hosts
+  # Modify localhost entry
+  sudo sed -i "s/127.0.0.1/localhost $ip_localhost/g" /etc/hosts
 
-# Flush DNS cache (if possible)
-if [ "$(uname)" == "Darwin" ]; then
-    sudo dscacheutil -flushcache
+  # Modify facebook.com entry
+  grep -q "^$ip_facebook\s+facebook.com" /etc/hosts || sudo echo -e "$ip_facebook\tfacebook.com" >> /etc/hosts
+}
+
+# Read user input for IP addresses
+read -p "Enter the desired IP address for localhost (default: 127.0.0.2): " ip_localhost
+read -p "Enter the desired IP address for facebook.com (default: 8.8.8.8): " ip_facebook
+
+# Set default values if user doesn't provide input
+ip_localhost=${ip_localhost:-127.0.0.2}
+ip_facebook=${ip_facebook:-8.8.8.8}
+
+# Confirm changes
+echo "You are about to modify /etc/hosts file."
+echo "localhost will resolve to $ip_localhost and facebook.com will resolve to $ip_facebook."
+read -p "Are you sure you want to continue? (y/N) " confirmation
+
+# Check confirmation and modify hosts file (requires sudo)
+if [[ "$confirmation" =~ ^[Yy]$ ]]; then
+  sudo -E bash -c "modify_hosts '$ip_localhost' '$ip_facebook'"
+  echo "Successfully modified /etc/hosts file."
+else
+  echo "Aborting. No changes made."
 fi
