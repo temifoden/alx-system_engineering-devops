@@ -1,16 +1,21 @@
 #!/usr/bin/env bash
-# Bash script to configure localhost and facebook.com IP addresses
+# Bash script to configure IP addresses on an Ubuntu server
 
-# Backup the original hosts file
-sudo cp /etc/hosts /etc/hosts.bak
+# Function to configure localhost IP address
+configure_localhost() {
+    sudo sed -i 's/^127.0.0.1\s*localhost$/127.0.0.2 localhost/' /etc/hosts
+}
 
-# Update localhost IP address to 127.0.0.2
-sudo sed -i '' 's/^127.0.0.1\s*localhost$/127.0.0.2 localhost/' /etc/hosts
+# Function to configure facebook.com IP address
+configure_facebook() {
+    echo "8.8.8.8 facebook.com" | sudo tee -a /etc/hosts > /dev/null
+}
 
-# Update facebook.com IP address to 8.8.8.8
-sudo sed -i '' 's/^.*facebook.com\s*$/8.8.8.8 facebook.com/' /etc/hosts
+# Main function
+main() {
+    configure_localhost
+    configure_facebook
+}
 
-# Flush DNS cache (if possible)
-if [ "$(uname)" == "Darwin" ]; then
-    sudo dscacheutil -flushcache
-fi
+# Call the main function
+main
