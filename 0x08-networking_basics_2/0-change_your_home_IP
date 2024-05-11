@@ -12,12 +12,15 @@ modify_hosts() {
   sudo sed -i "s/127.0.0.1/localhost $ip_localhost/g" /etc/hosts
 
   # Modify facebook.com entry
-  grep -q "^$ip_facebook\s+facebook.com" /etc/hosts || sudo echo -e "$ip_facebook\tfacebook.com" >> /etc/hosts
+ grep -q "^$ip_facebook\s+facebook.com" /etc/hosts || sudo tee -a /etc/hosts <<< "$ip_facebook\tfacebook.com"
+
+  # Optionally use tee instead:
+  # grep -q "^$ip_facebook\s+facebook.com" /etc/hosts || sudo tee -a /etc/hosts <<< "$ip_facebook\tfacebook.com"
 }
 
 # Read user input for IP addresses
-read -p "Enter the desired IP address for localhost (default: 127.0.0.2): " ip_localhost
-read -p "Enter the desired IP address for facebook.com (default: 8.8.8.8): " ip_facebook
+read -r -p "Enter the desired IP address for localhost (default: 127.0.0.2): " ip_localhost
+read -r -p "Enter the desired IP address for facebook.com (default: 8.8.8.8): " ip_facebook
 
 # Set default values if user doesn't provide input
 ip_localhost=${ip_localhost:-127.0.0.2}
@@ -26,7 +29,7 @@ ip_facebook=${ip_facebook:-8.8.8.8}
 # Confirm changes
 echo "You are about to modify /etc/hosts file."
 echo "localhost will resolve to $ip_localhost and facebook.com will resolve to $ip_facebook."
-read -p "Are you sure you want to continue? (y/N) " confirmation
+read -r -p "Are you sure you want to continue? (y/N) " confirmation
 
 # Check confirmation and modify hosts file (requires sudo)
 if [[ "$confirmation" =~ ^[Yy]$ ]]; then
