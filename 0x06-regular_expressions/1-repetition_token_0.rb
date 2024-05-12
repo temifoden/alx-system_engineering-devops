@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
-regex = /hbt{2,5}n/
+regex = /h{0,1}btn/
 puts ARGV[0].scan(regex).join
