@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-apt-get update
-apt-get install -y nginx
-sed -i 's/listen \[::\]:80 default_server;/listen \[::\]:80;/' /etc/nginx/sites-available/default
-service nginx stop
-service nginx start
+# add -f to ln ro forcefully remove file if it exists
+
+ln -sf /etc/nginx/sites-available/default /etc/nginx/site-enabled/default
+sudo service nginx restart
+rm /run/nginx.pid
