@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # add -f to ln ro forcefully remove file if it exists
-
 ln -sf /etc/nginx/sites-available/default /etc/nginx/site-enabled/default
 sudo service nginx restart
 rm /run/nginx.pid
