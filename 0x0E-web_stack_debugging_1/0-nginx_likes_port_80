@@ -1,34 +1,5 @@
 #!/usr/bin/env bash
-# Ensure the script exits if any command fails
-set -e
+# debugging nginx port 80
 
-# Update package lists and install Nginx if not already installed
-apt-get update
-apt-get install -y nginx
-
-# Ensure Nginx is configured to listen on port 80
-sed -i 's/listen 80 default_server;/listen 80;/' /etc/nginx/sites-available/default
-sed -i 's/listen \[::\]:80 default_server;/listen \[::\]:80;/' /etc/nginx/sites-available/default
-
-# Allow Nginx to bind to port 80 if running within a container
-echo 'daemon off;' >> /etc/nginx/nginx.conf
-
-# Start Nginx service
-service nginx restart
-
-# Ensure UFW (firewall) is not blocking port 80 (if UFW is installed and active)
-if command -v ufw > /dev/null 2>&1; then
-    ufw allow 80/tcp
-    ufw reload
-fi
-
-# Ensure Nginx is running and listening on port 80
-if curl -s --head 0:80 | grep "200 OK" > /dev/null; then
-    echo "Nginx is running and listening on port 80"
-else
-    echo "Failed to start Nginx or bind it to port 80"
-    exit 1
-fi
-
-# Exit successfully
-exit 0
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/site-enabled/default
+sudo service nginx restart
