@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# server-o1 login commands
+
+# Setting up the SSH-AGENT
+eval-add ~/.ssh/id_rsa.pub
+
+# username and IP address
+ssh ubuntu@100.25.133.24
