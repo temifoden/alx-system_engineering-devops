@@ -2,13 +2,13 @@
 # Shows information about subdomains.
 
 domain_information() {
-    local domain = "$1"
-    local subdomain = "$2"
-    local fqdn = "$subdomain.$domain"
+    local domain="$1"
+    local subdomain="$2"
+    local fqdn="$subdomain.$domain"
     local record
 
     # Get DNS record information
-    record = $(dig + short "$fqdn")
+    record=$(dig +short "$fqdn")
 
     if [ -z "$record" ]; then
         echo "The subdomain $subdomain does not exist."
