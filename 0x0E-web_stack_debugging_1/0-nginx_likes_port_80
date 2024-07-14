@@ -2,4 +2,5 @@
 # debugging nginx port 80
 
 sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/site-enabled/default
+
 sudo service nginx restart
