@@ -43,7 +43,6 @@ root@966c5664b21f:/#
 1. Make it sweet and short
 
 Using what you did for task #0, make your fix short and sweet.
-
 Requirements:
 
 Your Bash script must be 5 lines long or less
