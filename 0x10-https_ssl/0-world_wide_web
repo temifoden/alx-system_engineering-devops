@@ -4,9 +4,15 @@
 domain_information() {
     local domain="$1"
     local subdomain="$2"
+    local fqdn="$subdomain.$domain"
     local line
-    line=$(dig "$subdomain"."$domain" | awk '/ANSWER SECTION:/ {getline; print; getline; print}')
-    echo "$subdomain $line" | awk '{printf "The subdomain %s is a %s record and points to %s\n", $1, $2, $3}'
+    line=$(dig "$fqdn" +short)
+    
+    if [ -z "$line" ]; then
+        echo "The subdomain $subdomain does not exist."
+    else
+        echo "The subdomain $subdomain is an A record and points to $line"
+    fi
 }
 
 if [ "$#" -eq 1 ]; then
@@ -16,4 +22,7 @@ if [ "$#" -eq 1 ]; then
     domain_information "$1" "web-02"
 elif [ "$#" -eq 2 ]; then
     domain_information "$1" "$2"
+else
+    echo "Usage: $0 domain [subdomain]"
+    exit 1
 fi
