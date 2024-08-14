@@ -32,5 +32,6 @@ def number_of_subscribers(subreddit):
         data = response.json()
         return data.get("data", {}).get("subscribers", 0)
     else:
-        print(f"Invalid subreddit or API error(status code: {response.status_code})")
+        print(f"Invalid subreddit or API error(status code:
+              {response.status_code})")
         return 0
