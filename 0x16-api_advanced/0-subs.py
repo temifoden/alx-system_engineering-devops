@@ -1,4 +1,5 @@
 import requests
+# A function that make requests
 
 
 def number_of_subscribers(subreddit):
