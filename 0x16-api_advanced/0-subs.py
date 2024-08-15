@@ -4,6 +4,7 @@ import requests
 A function that make requests
 """
 
+
 def number_of_subscribers(subreddit):
     """
     This function queries the Reddit API nd returns the number of subscribers
