@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-import requests
 """
 A function that make requests
 """
+import requests
 
 
 def number_of_subscribers(subreddit):
