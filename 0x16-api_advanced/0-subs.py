@@ -1,6 +1,8 @@
+#!/usr/bin/python3
 import requests
-# A function that make requests
-
+"""
+A function that make requests
+"""
 
 def number_of_subscribers(subreddit):
     """
