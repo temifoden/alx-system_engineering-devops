@@ -17,13 +17,17 @@ def number_of_subscribers(subreddit):
     """
 
     # Base URl for subreddint information
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
     # Set custom user-agent to avoid "Too many Requests" errors
-    headers = {"User-Agent": "linux:0x16.api.advanced:v1.0.0"}
+    headers = {"User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"}
     # Send a GET request without following redirects
-    response = requests.get(url, headers=headers, allow_redirects=False)
-    # Raise an exception for non-200 status code
-    if response.status_code == 404:
+    try:
+        response = requests.get(url, headers=headers, allow_redirects=False)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        print(f"Error requesting subreddit info: {e}")
         return 0
+
     results = response.json().get("data")
-    return results.get("subscribers")
+    subscribers = results.get("subscribers", 0)
+    return subscribers
