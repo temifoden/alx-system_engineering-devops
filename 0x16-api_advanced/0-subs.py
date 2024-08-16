@@ -19,10 +19,8 @@ def number_of_subscribers(subreddit):
     # Base URl for subreddint information
     url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
     # Set custom user-agent to avoid "Too many Requests" errors
-    headers = {"User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"}
-
+    headers = {"User-Agent": "linux:0x16.api.advanced:v1.0.0"}
     # Send a GET request without following redirects
-
     response = requests.get(url, headers=headers, allow_redirects=False)
     # Raise an exception for non-200 status code
     if response.status_code == 404:
