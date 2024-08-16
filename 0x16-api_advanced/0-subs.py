@@ -22,9 +22,9 @@ def number_of_subscribers(subreddit):
     headers = {"User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"}
 
     # Send a GET request without following redirects
-   
+
     response = requests.get(url, headers=headers, allow_redirects=False)
-        # Raise an exception for non-200 status code
+    # Raise an exception for non-200 status code
     if response.status_code == 404:
         return 0
     results = response.json().get("data")
